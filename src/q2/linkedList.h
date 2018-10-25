@@ -30,5 +30,15 @@ void push(listElement** list, char* data, size_t size);
 //Update the list reference using side effects.
 listElement* pop(listElement** list);
 
+//==============================================
+
+//Enqueue a new element onto the head of the list.
+//Update the list reference using side effects.
+void enqueue(listElement** list, char* data, size_t size); 
+
+//Dequeue an element from the tail of the list.
+listElement* dequeue(listElement* list); 
+
+
 
 #endif
