@@ -3,21 +3,28 @@
 #include <string.h>
 #include "genericLinkedList.h"
 
+typedef void (*print)(void* data);
+
 typedef struct listElementStruct{
-  char* data;
+  void* data;
   size_t size;
+  print printFunction; // funtion pointer 
   struct listElementStruct* next;
 } listElement;
 
+void printfunc(void* data){
+      printf("hello");
+}
+
 //Creates a new linked list element with given content of size
 //Returns a pointer to the element
-listElement* createEl(char* data, size_t size){
+listElement* createEl(void* data, size_t size, print printFunc){
   listElement* e = malloc(sizeof(listElement));
   if(e == NULL){
     //malloc has had an error
     return NULL; //return NULL to indicate an error.
   }
-  char* dataPointer = malloc(sizeof(char)*size);
+  void* dataPointer = malloc(size);
   if(dataPointer == NULL){
     //malloc has had an error
     free(e); //release the previously allocated memory
@@ -26,6 +33,7 @@ listElement* createEl(char* data, size_t size){
   strcpy(dataPointer, data);
   e->data = dataPointer;
   e->size = size;
+  e->printFunction = printFunc;
   e->next = NULL;
   return e;
 }
@@ -34,15 +42,16 @@ listElement* createEl(char* data, size_t size){
 void traverse(listElement* start){
   listElement* current = start;
   while(current != NULL){
-    printf("%s\n", current->data);
+    //printf("%s\n", current->data);
+	current->printFunction(current->data);
     current = current->next;
   }
 }
 
 //Inserts a new element after the given el
 //Returns the pointer to the new element
-listElement* insertAfter(listElement* el, char* data, size_t size){
-  listElement* newEl = createEl(data, size);
+listElement* insertAfter(listElement* el, void* data, size_t size, print printFunc){
+  listElement* newEl = createEl(data, size, printFunc);
   listElement* next = el->next;
   newEl->next = next;
   el->next = newEl;
@@ -72,8 +81,8 @@ int length(listElement* list) {
 	return length;
 }
 
-void push(listElement** list, char* data, size_t size) {
-	listElement* newEl = createEl(data, size);
+void push(listElement** list, void* data, size_t size, print printFunc) {
+	listElement* newEl = createEl(data, size, printFunc);
 	newEl->next = *list;
 	*list = newEl;
 
@@ -89,9 +98,9 @@ listElement* pop(listElement** list) {
 }
 
 // same as push
-void enqueue(listElement** list, char* data, size_t size) {
+void enqueue(listElement** list, void* data, size_t size, print printFunc) {
 	
-	listElement* newEl = createEl(data, size);
+	listElement* newEl = createEl(data, size, printFunc);
 	newEl->next = *list;
 	*list = newEl;
 }
