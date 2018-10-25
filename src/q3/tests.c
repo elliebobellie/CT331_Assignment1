@@ -21,22 +21,11 @@ void printFloat(void *data) {
 
 void runTests(){
   printf("Tests running...\n");
-
-  /*
-  listElement* l = createEl("Test String (1).", 30);
-  listElement* l2 = insertAfter(l, "another string (2)", 30);
-  listElement* l3 = insertAfter(l2, "LOL a final string (3)", 30);
-  insertAfter(l3, "HAHAHA(4)", 30);
   
-  l.printFunction = printfunc;
-  l.printFunction("Hello");
-
-  */
-  
-  
-  char p = 'P';
-  listElement* l = createEl(&p, sizeof(char),&printChar);
+  char e = 'E';
+  listElement* l = createEl(&e, sizeof(char),&printChar);
   traverse(l);
+  
   
   printf("\nTests complete.\n");
 }
