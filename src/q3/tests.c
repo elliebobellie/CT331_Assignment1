@@ -25,6 +25,12 @@ void runTests(){
   char e = 'E';
   listElement* l = createEl(&e, sizeof(char),&printChar);
   traverse(l);
+  length(l);
+  
+  int i = 25;
+  insertAfter(l,&i,sizeof(i),&printInt);
+  traverse(l);
+  length(l);
   
   
   printf("\nTests complete.\n");
